@@ -11145,7 +11145,7 @@ item_hauntpower = {
         "kidneystone":1.3, #hard to get. likely takes direct trading up of the item
         "sord":-0.1, #jpeg artificates are extremely unspooky and actively negate power.
         "nemes":1.05, #semi historic cosmetic
-        "negapoudrin":1.1, #basic channel item
+        "negapoudrin":1.1 #basic channel item
 }
 
 # Things a slimeoid might throw

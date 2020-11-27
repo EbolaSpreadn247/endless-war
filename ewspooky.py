@@ -228,18 +228,21 @@ async def haunt(cmd):
 				#channel item
                                 channel_response = ""
                                 if cmd.tokens_count > 2:
-                                        item_search = ewutils.flattenTokenListToString(cmd.tokens[2:])
+                                        item_search = ewutils.flattenTokenListToString(cmd.tokens[2])
                                         item_sought = ewitem.find_item(item_search = item_search, id_user = cmd.message.author.id, id_server = cmd.guild.id if cmd.guild is not None else None, item_type_filter = ewcfg.it_item)
 				        if item_sought != None:
-                                                  channel_power = ewcfg.item_hauntpower(item_sought.item_name)
-                                                  
-                                                  if (item_sought.item_name == "kidneystone"):
-                                                         if (item_sought.original_user == haunted_data.id_user):
-                                	                         channel_response = " Everyone is staring at you and you look downwards to find that you haved pissed yourself, thoroughly. Experienced in cowardly secreations, you dont think fear is the reason this time -you sense part of your body outside of itself."
-                                                         else: 
-                                                                 channel_power = 1 #doesnt work unless its the person being haunted is the original creator of the kidney stone
-						                 response = "Thats not their kidney stone, you dumb ghast. Re-examine its ~spiritual~ residue and try again." #there is no way to do that except to remember whos kidney stone u got.
-                                                         await ewutils.send_message(cmd.client, cmd.message.channel, ewutils.formatMessage(cmd.message.author, response)) 
+						try:
+							channel_power = ewcfg.item_hauntpower.get(item_sought.item_name)
+						except:
+							channel_power = 1.02 
+						if (item_sought.item_name == "kidneystone"):
+							if (item_sought.original_user == haunted_data.id_user):
+								channel_response = " Everyone is staring at you and you look downwards to find that you haved pissed yourself, thoroughly. Experienced in cowardly secreations, you dont think fear is the reason this time -you sense part of your body outside of itself."
+								else: 
+									channel_power = 1 #doesnt work unless its the person being haunted is the original creator of the kidney stone
+									response = "Thats not their kidney stone, you dumb ghast. Re-examine its ~spiritual~ residue and try again." #there is no way to do that except to remember whos kidney stone u got.
+									await ewutils.send_message(cmd.client, cmd.message.channel, ewutils.formatMessage(cmd.message.author, response)) 
+						
                                                   
 						  
                                                   haunt_power_multiplier *= channel_power        
@@ -286,7 +289,7 @@ async def haunt(cmd):
 
 				haunted_channel = ewcfg.id_to_poi.get(haunted_data.poi).channel
 				haunt_message = "You feel a cold shiver run down your spine"
-				if cmd.tokens_count > 2:
+				if (cmd.tokens_count > 2 and channel_response == "") or (cmd.tokens_count > 3 and channel_response != ""):
 					haunt_message_content = re.sub("<.+>" if cmd.mentions_count == 1 else "\d{17,}", "", cmd.message.content[(len(cmd.tokens[0])):]).strip()
 					# Cut down really big messages so discord doesn't crash
 					if len(haunt_message_content) > 500:

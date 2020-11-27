@@ -3239,7 +3239,7 @@ item_list = [
 		id_item = item_id_kidneystone,
 		str_name = "kidney stone",
 		str_desc = "A dense, crystalized stone of kidney things. You can feel the pain it has caused just from looking at it.",
-                original_user = "",
+		original_user = "",
 	)
 	EwGeneralItem(
 		id_item = item_id_tradingcardpack,

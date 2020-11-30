@@ -2706,6 +2706,7 @@ vendor_rpcity = "RP City" # Double halloween costume store
 
 item_id_slimepoudrin = 'slimepoudrin'
 item_id_negapoudrin = 'negapoudrin'
+item_id_kidneystone = 'kidneystone'
 item_id_monstersoup = 'monstersoup'
 item_id_doublestuffedcrust = 'doublestuffedcrust'
 item_id_quadruplestuffedcrust = 'quadruplestuffedcrust'
@@ -3234,6 +3235,12 @@ item_list = [
 		str_name = "negapoudrin",
 		str_desc = "A dense, crystalized slab of unholy negaslime.",
 	),
+        EwGeneralItem(
+		id_item = item_id_kidneystone,
+		str_name = "kidney stone",
+		str_desc = "A dense, crystalized stone of kidney things. You can feel the pain it has caused just from looking at it.",
+		original_user = "",
+	)
 	EwGeneralItem(
 		id_item = item_id_tradingcardpack,
 		alias = [
@@ -11139,6 +11146,14 @@ for hue in hue_list:
 
 	for alias in hue.alias:
 		hue_map[alias] = hue# A map of id_hue to EwHue objects.
+
+# list of items corresponding to their haunt power bonus
+item_hauntpower = {
+        "kidneystone":1.3, #hard to get. likely takes direct trading up of the item
+        "sord":-0.1, #jpeg artificates are extremely unspooky and actively negate power.
+        "nemes":1.05, #semi historic cosmetic
+        "negapoudrin":1.1 #basic channel item
+}
 
 # Things a slimeoid might throw
 thrownobjects_list = [

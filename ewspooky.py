@@ -237,15 +237,13 @@ async def haunt(cmd):
 							channel_power = 1.02 
 						if (item_sought.item_name == "kidneystone"):
 							if (item_sought.original_user == haunted_data.id_user):
-								channel_response = " Everyone is staring at you and you look downwards to find that you haved pissed yourself, thoroughly. Experienced in cowardly secreations, you dont think fear is the reason this time -you sense part of your body outside of itself."
-								else: 
-									channel_power = 1 #doesnt work unless its the person being haunted is the original creator of the kidney stone
-									response = "Thats not their kidney stone, you dumb ghast. Re-examine its ~spiritual~ residue and try again." #there is no way to do that except to remember whos kidney stone u got.
-									await ewutils.send_message(cmd.client, cmd.message.channel, ewutils.formatMessage(cmd.message.author, response)) 
-						
-                                                  
-						  
-                                                  haunt_power_multiplier *= channel_power        
+								channel_response = " Everyone is staring at you and you look downwards to find that you haved pissed yourself, thoroughly. Could they be interested..?"
+							else: 
+								channel_power = 1 #doesnt work unless its the person being haunted is the original creator of the kidney stone
+								response = "Thats not their kidney stone, you dumb ghast. Re-examine its ~spiritual~ residue and try again." #there is no way to do that except to remember whos kidney stone u got.
+								await ewutils.send_message(cmd.client, cmd.message.channel, ewutils.formatMessage(cmd.message.author, response)) 
+							
+						haunt_power_multiplier *= channel_power        
                                 # misc
 				if ewcfg.weather_map.get(market_data.weather) == ewcfg.weather_foggy:
 					haunt_power_multiplier *= 1.1
@@ -291,10 +289,11 @@ async def haunt(cmd):
 				haunt_message = "You feel a cold shiver run down your spine"
 				if (cmd.tokens_count > 2 and channel_response == "") or (cmd.tokens_count > 3 and channel_response != ""):
 					haunt_message_content = re.sub("<.+>" if cmd.mentions_count == 1 else "\d{17,}", "", cmd.message.content[(len(cmd.tokens[0])):]).strip()
+					haunt_message_content = re.sub(channel_response, "",haunt_message.content)
 					# Cut down really big messages so discord doesn't crash
-					if len(haunt_message_content) > 500:
-						haunt_message_content = haunt_message_content[:-500]
-					haunt_message += " and faintly hear the words \"{}\"".format(haunt_message_content)
+					if len(haunt_message_content+channel_response) > 500:
+						haunt_message_content = haunt_message_content[:-1*(500+len(channel_response))]
+					haunt_message = channel_response + haunt_message + " and faintly hear the words \"{}\"".format(haunt_message_content)
 				haunt_message += ". {} slime evaporates from your body.".format(slimes_lost)
 				if ewcfg.mutation_id_coleblooded in target_mutations:
 					haunt_message += " The ghost that did it wails in agony as their ectoplasm boils in your coleslaw blood!"
@@ -306,7 +305,7 @@ async def haunt(cmd):
 			response = "Your spookiness is appreciated, but ENDLESS WAR didn\'t understand that name."
 
 	# Send the response to the player.
-	resp_cont.add_channel_response(cmd.message.channel.name, response+channel_response)
+	resp_cont.add_channel_response(cmd.message.channel.name, response)
 	await resp_cont.post()
 	#await ewutils.send_message(cmd.client, cmd.message.channel, ewutils.formatMessage(cmd.message.author, response))
 

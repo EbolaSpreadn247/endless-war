@@ -1807,6 +1807,7 @@ cd_slimeoiddefeated = 300
 cd_scavenge = 0
 soft_cd_scavenge = 15 # Soft cooldown on scavenging
 cd_enlist = 60
+cd_vouch = 24 * 60 * 60 #24 hours
 cd_premium_purchase = 2 * 24 * 60 * 60 # 48 Hours, 2 days
 cd_new_player = 3 * 24 * 60 * 60 # 72 Hours, 3 days
 

@@ -462,7 +462,7 @@ async def order(cmd):
 								response = "You can't order anything for them because they aren't here!"
 								return await ewutils.send_message(cmd.client, cmd.message.channel, ewutils.formatMessage(cmd.message.author, response))
 
-						if len(food_items) >= user_data.get_food_capacity() and target_data == None and togo:
+						if len(food_items) >= user_data.get_food_capacity() and target_data == None and togo and item.time_expir != 172800:
 							# user_data never got persisted so the player won't lose money unnecessarily
 							response = "You can't carry any more food than that."
 							return await ewutils.send_message(cmd.client, cmd.message.channel, ewutils.formatMessage(cmd.message.author, response))
